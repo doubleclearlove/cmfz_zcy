@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.MenuDao">
+    <resultMap type="com.baizhi.entity.Menu" id="queryMenu">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="iconCls" column="iconCls"/>
+        <result property="href" column="href"></result>
+        <result property="parent_id" column="parent_id"/>
+        <collection property="menus" ofType="com.baizhi.entity.Menu">
+            <id property="id" column="cid"/>
+            <result property="title" column="ctitle"/>
+            <result property="iconCls" column="ciconCls"/>
+            <result property="href" column="chref"></result>
+            <result property="parent_id" column="cparent_id"/>
+        </collection>
+    </resultMap>
+    <select id="queryallMenu" resultMap="queryMenu">
+       SELECT p.id,p.title,p.parent_id,p.iconCls,p.href,
+       c.id cid,c.title ctitle,c.parent_id cparent_id,c.iconCls ciconCls,c.href chref
+       from cmfz_menu p  JOIN cmfz_menu c
+       on p.id =c.parent_id
+    </select>
+
+    <select id="queryoneMenu" resultType="com.baizhi.entity.Menu">
+
+    </select>
+
+    <insert id="insertMenu">
+    insert into cmfz_menu values(#{id},#{title},#{iconCls},#{href},#{parent_id})
+    </insert>
+
+    <delete id="deleteMenu">
+       delete from cmfz_menu where id=#{id}
+    </delete>
+
+    <update id="updateMenu">
+      update cmfz_menu set title=#{title},iconCls=#{iconCls},href=#{href},parent_id=#{parent_id} where id=#{id}
+    </update>
+</mapper>

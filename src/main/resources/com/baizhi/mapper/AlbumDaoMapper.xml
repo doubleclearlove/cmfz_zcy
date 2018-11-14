@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.AlbumDao">
+    <resultMap id="queryalbum" type="com.baizhi.entity.Album">
+       <id property="id" column="aid"></id>
+       <result property="title" column="atitle"></result>
+       <result property="publishDate" column="publishDate"></result>
+        <result property="count" column="count"></result>
+        <result property="coverImg" column="coverImg"></result>
+        <result property="star" column="star"></result>
+        <result property="author" column="author"></result>
+        <result property="broadCast" column="broadCast"></result>
+        <result property="brief" column="brief"></result>
+        <collection property="children" ofType="com.baizhi.entity.Chapter">
+            <id property="chapter_id" column="cid"></id>
+            <result property="title" column="ctitle"></result>
+            <result property="size" column="size"></result>
+            <result property="duration" column="duration"></result>
+            <result property="downPath" column="downPath"></result>
+            <result property="uploadTime" column="uploadTime"></result>
+        </collection>
+    </resultMap>
+    <select id="queryallAlbum" resultMap="queryalbum">
+          select cmfz_album.id aid,cmfz_album.title atitle,publishDate,count,coverImg,star,author,broadCast,brief,
+          chapter_id cid,cmfz_chapter.title ctitle,size,duration,downPath,uploadTime
+          from cmfz_album,cmfz_chapter where cmfz_album.id=cmfz_chapter.album_id
+    </select>
+
+    <insert id="insertAlbum">
+        insert into cmfz_album values(#{id},#{title},#{publishDate},#{count},#{coverImg},#{star},#{author},#{broadCast},#{brief})
+    </insert>
+
+    <delete id="deleteAlbum">
+        delete from cmfz_album where id=#{id}
+    </delete>
+    <select id="queryoneAlbum" resultType="com.baizhi.entity.Album">
+        select * from cmfz_album where id=#{id}
+    </select>
+
+</mapper>

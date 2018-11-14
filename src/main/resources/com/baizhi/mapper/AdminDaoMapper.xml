@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.AdminDao">
+    <insert id="insertAdmin">
+        insert into cmfz_admin values(#{id},#{name},#{password})
+    </insert>
+    <delete id="deleteAdmin">
+        delete from cmfz_admin where id=#{id}
+    </delete>
+    <update id="updateAdmin">
+      update cmfz_admin set name=#{name},password=#{password} where id=#{id}
+    </update>
+    <select id="queryallAdmin" resultType="com.baizhi.entity.Admin">
+      select * from cmfz_admin
+    </select>
+    <select id="queryoneAdmin" resultType="com.baizhi.entity.Admin">
+        select * from cmfz_admin where name=#{name} and password=#{password}
+    </select>
+</mapper>
